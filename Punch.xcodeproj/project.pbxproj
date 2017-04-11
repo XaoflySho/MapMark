@@ -18,6 +18,7 @@
 		412914411E9B22B400B71DCB /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412914401E9B22B400B71DCB /* LocalViewController.m */; };
 		412914441E9B237500B71DCB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 412914431E9B237500B71DCB /* MapKit.framework */; };
 		4169E39F1E9C81AF00FE0448 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4169E39E1E9C81AF00FE0448 /* ListTableViewCell.m */; };
+		4169E3A11E9C9A8500FE0448 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4169E3A01E9C9A8500FE0448 /* CoreData.framework */; };
 		41A8C6E91E9BAD1700AF9BEE /* GradientAlphaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8C6E81E9BAD1700AF9BEE /* GradientAlphaView.m */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		412914431E9B237500B71DCB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4169E39D1E9C81AF00FE0448 /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
 		4169E39E1E9C81AF00FE0448 /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
+		4169E3A01E9C9A8500FE0448 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41A8C6E71E9BAD1700AF9BEE /* GradientAlphaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientAlphaView.h; sourceTree = "<group>"; };
 		41A8C6E81E9BAD1700AF9BEE /* GradientAlphaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientAlphaView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4169E3A11E9C9A8500FE0448 /* CoreData.framework in Frameworks */,
 				412914441E9B237500B71DCB /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +163,7 @@
 		412914421E9B237500B71DCB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4169E3A01E9C9A8500FE0448 /* CoreData.framework */,
 				412914431E9B237500B71DCB /* MapKit.framework */,
 			);
 			name = Frameworks;

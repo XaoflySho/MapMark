@@ -202,6 +202,8 @@ static int localViewInitCenterY = 0;
     
     [self moveUserLocationToMapViewCenter];
     
+    [self reverseGeocodeLocation:userLocation.location];
+    
 }
 /*
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
@@ -235,6 +237,52 @@ static int localViewInitCenterY = 0;
     MKCoordinateRegion region = MKCoordinateRegionMake(_userLocation.location.coordinate, MKCoordinateSpanMake(0.003, 0.003));
     
     [self.mapView setRegion:region animated:YES];
+    
+}
+
+- (void)reverseGeocodeLocation:(nonnull CLLocation *)location {
+    
+    //地理位置反编码
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:location
+                   completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                       
+                       if (error || placemarks.count == 0) {
+                           
+                           NSLog(@"地理位置反编码失败：%@",error);
+                           
+                           //                           self.areaString = @"未知";
+                           //                           self.cityString = @"未知";
+                           //                           self.provinceString = @"未知";
+                           
+                           NSLog(@"未获取到设备位置！");
+                           
+                           //                           self.areaLabel.text = @"定位失败,请选择";
+//                           self.provinceString = @"定位失败";
+                           
+                           
+                       }else{
+                           
+                           CLPlacemark *placemark = [placemarks lastObject];
+                           
+                           NSDictionary *addressDictionary = placemark.addressDictionary;
+                           
+                           NSLog(@"0：%@",placemark.addressDictionary);
+                           NSLog(@"1：%@",placemark.administrativeArea);
+                           NSLog(@"2：%@",placemark.locality);
+                           NSLog(@"3：%@",placemark.name);
+                           NSLog(@"4：%@",placemark.thoroughfare);
+                           NSLog(@"5：%@",placemark.subThoroughfare);
+                           NSLog(@"6：%@",placemark.subLocality);
+                           NSLog(@"7：%@",placemark.areasOfInterest);
+//                           self.provinceString = placemark.administrativeArea;
+//                           self.cityString = placemark.locality;
+//                           self.areaString = placemark.name;
+                           
+                           //                           self.areaLabel.text = placemark.name;
+                       }
+                       
+                   }];
     
 }
 

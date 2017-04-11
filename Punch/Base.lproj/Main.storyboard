@@ -156,7 +156,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FyB-mU-cHM">
-                                <rect key="frame" x="0.0" y="367" width="375" height="444.5"/>
+                                <rect key="frame" x="0.0" y="599" width="375" height="444.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ua-Tt-Kwd" customClass="UIVisualEffectView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="444.5"/>
@@ -266,7 +266,7 @@
                         <constraints>
                             <constraint firstItem="FyB-mU-cHM" firstAttribute="leading" secondItem="pJt-ee-cgd" secondAttribute="leading" id="2S1-fV-sCZ"/>
                             <constraint firstItem="vb2-kS-0ug" firstAttribute="width" secondItem="pJt-ee-cgd" secondAttribute="width" id="2XL-NK-QkR"/>
-                            <constraint firstItem="EqK-RH-Aec" firstAttribute="top" secondItem="FyB-mU-cHM" secondAttribute="top" constant="300" id="4sA-QE-L0x"/>
+                            <constraint firstItem="EqK-RH-Aec" firstAttribute="top" secondItem="FyB-mU-cHM" secondAttribute="top" constant="68" id="4sA-QE-L0x"/>
                             <constraint firstItem="vb2-kS-0ug" firstAttribute="centerY" secondItem="pJt-ee-cgd" secondAttribute="centerY" id="6kK-Zx-5JC"/>
                             <constraint firstAttribute="trailing" secondItem="FyB-mU-cHM" secondAttribute="trailing" id="Ab4-9f-vJ4"/>
                             <constraint firstItem="vb2-kS-0ug" firstAttribute="height" secondItem="pJt-ee-cgd" secondAttribute="height" id="SR8-QC-217"/>
