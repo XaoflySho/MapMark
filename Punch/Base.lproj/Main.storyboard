@@ -156,7 +156,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FyB-mU-cHM">
-                                <rect key="frame" x="0.0" y="599" width="375" height="444.5"/>
+                                <rect key="frame" x="0.0" y="367" width="375" height="444.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ua-Tt-Kwd" customClass="UIVisualEffectView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="444.5"/>
@@ -199,6 +199,32 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pDc-1o-uy7">
                                         <rect key="frame" x="0.0" y="69" width="375" height="375.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="90" id="Cix-VK-heR" customClass="ListTableViewCell">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cix-VK-heR" id="9I4-MC-vpG">
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="89.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hZ-aj-PGo">
+                                                            <rect key="frame" x="8" y="34" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="1hZ-aj-PGo" firstAttribute="centerY" secondItem="9I4-MC-vpG" secondAttribute="centerY" id="oAb-VT-pHt"/>
+                                                        <constraint firstItem="1hZ-aj-PGo" firstAttribute="leading" secondItem="9I4-MC-vpG" secondAttribute="leading" constant="8" id="sGw-QY-MAc"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <inset key="separatorInset" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <connections>
+                                                    <outlet property="timeLabel" destination="1hZ-aj-PGo" id="khd-pl-fhV"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
                                         <connections>
                                             <outlet property="dataSource" destination="XVt-iz-pln" id="KDz-yu-aH8"/>
                                             <outlet property="delegate" destination="XVt-iz-pln" id="o75-FX-wsO"/>
@@ -240,7 +266,7 @@
                         <constraints>
                             <constraint firstItem="FyB-mU-cHM" firstAttribute="leading" secondItem="pJt-ee-cgd" secondAttribute="leading" id="2S1-fV-sCZ"/>
                             <constraint firstItem="vb2-kS-0ug" firstAttribute="width" secondItem="pJt-ee-cgd" secondAttribute="width" id="2XL-NK-QkR"/>
-                            <constraint firstItem="EqK-RH-Aec" firstAttribute="top" secondItem="FyB-mU-cHM" secondAttribute="top" constant="68" id="4sA-QE-L0x"/>
+                            <constraint firstItem="EqK-RH-Aec" firstAttribute="top" secondItem="FyB-mU-cHM" secondAttribute="top" constant="300" id="4sA-QE-L0x"/>
                             <constraint firstItem="vb2-kS-0ug" firstAttribute="centerY" secondItem="pJt-ee-cgd" secondAttribute="centerY" id="6kK-Zx-5JC"/>
                             <constraint firstAttribute="trailing" secondItem="FyB-mU-cHM" secondAttribute="trailing" id="Ab4-9f-vJ4"/>
                             <constraint firstItem="vb2-kS-0ug" firstAttribute="height" secondItem="pJt-ee-cgd" secondAttribute="height" id="SR8-QC-217"/>

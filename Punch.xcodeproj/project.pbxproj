@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4129140B1E9B20E600B71DCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4129140A1E9B20E600B71DCB /* main.m */; };
 		4129140E1E9B20E600B71DCB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4129140D1E9B20E600B71DCB /* AppDelegate.m */; };
-		412914111E9B20E600B71DCB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412914101E9B20E600B71DCB /* ViewController.m */; };
 		412914141E9B20E600B71DCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412914121E9B20E600B71DCB /* Main.storyboard */; };
 		412914171E9B20E600B71DCB /* Punch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 412914151E9B20E600B71DCB /* Punch.xcdatamodeld */; };
 		412914191E9B20E600B71DCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 412914181E9B20E600B71DCB /* Assets.xcassets */; };
@@ -18,6 +17,7 @@
 		412914321E9B20E600B71DCB /* PunchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 412914311E9B20E600B71DCB /* PunchUITests.m */; };
 		412914411E9B22B400B71DCB /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412914401E9B22B400B71DCB /* LocalViewController.m */; };
 		412914441E9B237500B71DCB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 412914431E9B237500B71DCB /* MapKit.framework */; };
+		4169E39F1E9C81AF00FE0448 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4169E39E1E9C81AF00FE0448 /* ListTableViewCell.m */; };
 		41A8C6E91E9BAD1700AF9BEE /* GradientAlphaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8C6E81E9BAD1700AF9BEE /* GradientAlphaView.m */; };
 /* End PBXBuildFile section */
 
@@ -43,8 +43,6 @@
 		4129140A1E9B20E600B71DCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4129140C1E9B20E600B71DCB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4129140D1E9B20E600B71DCB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4129140F1E9B20E600B71DCB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		412914101E9B20E600B71DCB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		412914131E9B20E600B71DCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		412914161E9B20E600B71DCB /* Punch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Punch.xcdatamodel; sourceTree = "<group>"; };
 		412914181E9B20E600B71DCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +57,8 @@
 		4129143F1E9B22B400B71DCB /* LocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalViewController.h; sourceTree = "<group>"; };
 		412914401E9B22B400B71DCB /* LocalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalViewController.m; sourceTree = "<group>"; };
 		412914431E9B237500B71DCB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4169E39D1E9C81AF00FE0448 /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
+		4169E39E1E9C81AF00FE0448 /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
 		41A8C6E71E9BAD1700AF9BEE /* GradientAlphaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientAlphaView.h; sourceTree = "<group>"; };
 		41A8C6E81E9BAD1700AF9BEE /* GradientAlphaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientAlphaView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,10 +117,10 @@
 				4129140D1E9B20E600B71DCB /* AppDelegate.m */,
 				4129143F1E9B22B400B71DCB /* LocalViewController.h */,
 				412914401E9B22B400B71DCB /* LocalViewController.m */,
+				4169E39D1E9C81AF00FE0448 /* ListTableViewCell.h */,
+				4169E39E1E9C81AF00FE0448 /* ListTableViewCell.m */,
 				41A8C6E71E9BAD1700AF9BEE /* GradientAlphaView.h */,
 				41A8C6E81E9BAD1700AF9BEE /* GradientAlphaView.m */,
-				4129140F1E9B20E600B71DCB /* ViewController.h */,
-				412914101E9B20E600B71DCB /* ViewController.m */,
 				412914121E9B20E600B71DCB /* Main.storyboard */,
 				412914181E9B20E600B71DCB /* Assets.xcassets */,
 				4129141A1E9B20E600B71DCB /* LaunchScreen.storyboard */,
@@ -307,7 +307,7 @@
 				412914171E9B20E600B71DCB /* Punch.xcdatamodeld in Sources */,
 				41A8C6E91E9BAD1700AF9BEE /* GradientAlphaView.m in Sources */,
 				412914411E9B22B400B71DCB /* LocalViewController.m in Sources */,
-				412914111E9B20E600B71DCB /* ViewController.m in Sources */,
+				4169E39F1E9C81AF00FE0448 /* ListTableViewCell.m in Sources */,
 				4129140E1E9B20E600B71DCB /* AppDelegate.m in Sources */,
 				4129140B1E9B20E600B71DCB /* main.m in Sources */,
 			);
