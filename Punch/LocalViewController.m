@@ -15,7 +15,7 @@
 
 @interface LocalViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource>
 
-//@property (nonatomic, weak) IBOutlet UIView *localView;
+@property (nonatomic, weak) IBOutlet UIView *localView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *localViewCenterY;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
@@ -26,8 +26,9 @@
 @property (nonatomic, weak) IBOutlet UIButton *punchButton;
 @property (nonatomic, weak) IBOutlet UIView *punchView;
 
+@property (nonatomic, weak) IBOutlet UIView *listView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *listViewHeight;
 @property (nonatomic, weak) IBOutlet UIVisualEffectView *visualEffectView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *visualEffectViewHeight;
 
 @property (nonatomic, weak) IBOutlet UITableView *listTableView;
 
@@ -39,8 +40,8 @@
 
 @end
 
-static int visualEffectViewMinHeight = 68;
-static int visualEffectViewInitHeight = 68;
+static int listViewMinHeight = 68;
+static int listViewInitHeight = 68;
 static int localViewInitCenterY = 0;
 
 @implementation LocalViewController
@@ -107,30 +108,73 @@ static int localViewInitCenterY = 0;
     
     CGPoint pt = [sender translationInView:_visualEffectView];
     
-    _visualEffectViewHeight.constant = visualEffectViewInitHeight - pt.y;
+    _listViewHeight.constant = listViewInitHeight - pt.y;
     
-    CGFloat scale = (_visualEffectViewHeight.constant - visualEffectViewMinHeight) / (SCREEN_HEIGHT * 2 / 3  - visualEffectViewMinHeight);
+    CGFloat scale = (_listViewHeight.constant - listViewMinHeight) / (SCREEN_HEIGHT * 2 / 3  - listViewMinHeight);
     _localViewCenterY.constant = scale * - SCREEN_HEIGHT / 3;
     _punchView.alpha = 1 - scale;
     
-    if (_visualEffectViewHeight.constant < visualEffectViewMinHeight) {
+    if (_listViewHeight.constant < listViewMinHeight) {
         
-        _visualEffectViewHeight.constant = visualEffectViewMinHeight;
+        _listViewHeight.constant = listViewMinHeight;
         _localViewCenterY.constant = 0;
         
     }
 
-    if (_visualEffectViewHeight.constant > SCREEN_HEIGHT * 2 / 3) {
+    if (_listViewHeight.constant > SCREEN_HEIGHT * 2 / 3) {
         
-        _visualEffectViewHeight.constant = SCREEN_HEIGHT * 2 / 3;
+        _listViewHeight.constant = SCREEN_HEIGHT * 2 / 3;
         _localViewCenterY.constant = - SCREEN_HEIGHT / 3;
         
     }
     
     if (sender.state == UIGestureRecognizerStateEnded) {
         
-        visualEffectViewInitHeight = _visualEffectViewHeight.constant;
-        localViewInitCenterY = _localViewCenterY.constant;
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             
+                             if (_listViewHeight.constant > SCREEN_HEIGHT / 3) {
+                                 
+                                 CGRect listViewFrame = _listView.frame;
+                                 listViewFrame = CGRectMake(0, SCREEN_HEIGHT / 3, listViewFrame.size.width, listViewFrame.size.height);
+                                 _listView.frame = listViewFrame;
+                                 
+                                 CGRect localViewFrame = _localView.frame;
+                                 localViewFrame = CGRectMake(0, - SCREEN_HEIGHT / 3, localViewFrame.size.width, localViewFrame.size.height);
+                                 _localView.frame = localViewFrame;
+                                 
+                                 _punchView.alpha = 0;
+                                 
+                                 _listViewHeight.constant = SCREEN_HEIGHT * 2 / 3;
+                                 _localViewCenterY.constant = - SCREEN_HEIGHT / 3;
+                                 
+                             }else {
+                                 
+                                 CGRect listViewFrame = _listView.frame;
+                                 listViewFrame = CGRectMake(0, SCREEN_HEIGHT - listViewMinHeight, listViewFrame.size.width, listViewFrame.size.height);
+                                 _listView.frame = listViewFrame;
+                                 
+                                 CGRect localViewFrame = _localView.frame;
+                                 localViewFrame = CGRectMake(0, 0, localViewFrame.size.width, localViewFrame.size.height);
+                                 _localView.frame = localViewFrame;
+                                 
+                                 _punchView.alpha = 1;
+                                 
+                                 _listViewHeight.constant = listViewMinHeight;
+                                 _localViewCenterY.constant = 0;
+                                 
+                             }
+                             
+                         } completion:^(BOOL finished) {
+                             
+                             if (finished) {
+                                 
+                                 listViewInitHeight = _listViewHeight.constant;
+                                 localViewInitCenterY = _localViewCenterY.constant;
+                                 
+                             }
+                             
+                         }];
         
     }
     
