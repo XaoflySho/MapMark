@@ -1,0 +1,231 @@
+//
+//  LocalViewController.m
+//  Punch
+//
+//  Created by 邵晓飞 on 2017/4/10.
+//  Copyright © 2017年 邵晓飞. All rights reserved.
+//
+
+#import "LocalViewController.h"
+
+//屏幕宽度
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+//屏幕高度
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+@interface LocalViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource>
+
+//@property (nonatomic, weak) IBOutlet UIView *localView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *localViewCenterY;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+
+@property (nonatomic, weak) IBOutlet UILabel *dateLabel;
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *markNumberLabel;
+
+@property (nonatomic, weak) IBOutlet UIButton *punchButton;
+@property (nonatomic, weak) IBOutlet UIView *punchView;
+
+@property (nonatomic, weak) IBOutlet UIVisualEffectView *visualEffectView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *visualEffectViewHeight;
+
+@property (nonatomic, weak) IBOutlet UITableView *listTableView;
+
+@property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) MKUserLocation *userLocation;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
+@end
+
+static int visualEffectViewMinHeight = 68;
+static int visualEffectViewInitHeight = 68;
+static int localViewInitCenterY = 0;
+
+@implementation LocalViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+//    _listTableView.tableHeaderView = _localView;
+    
+    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    [_visualEffectView setEffect:blurEffect];
+    
+    [self timerInit];
+    
+    if ([CLLocationManager locationServicesEnabled]) {
+
+        self.locationManager = [[CLLocationManager alloc] init];
+        
+        //定位服务授权：使用时
+        [self.locationManager requestWhenInUseAuthorization];
+        
+    }else {
+        
+    }
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+}
+
+- (void)timerInit {
+    
+    if (!_timer) {
+        
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.01 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            
+            [self timeLabelReload];
+            
+        }];
+        
+    }
+    
+}
+
+- (void)timeLabelReload {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd|HH:mm:ss";
+    NSString *nowDateStr = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSArray *subStrings = [nowDateStr componentsSeparatedByString:@"|"];
+    
+    _dateLabel.text = subStrings[0];
+    _timeLabel.text = subStrings[1];
+    
+}
+
+- (IBAction)pan:(UIPanGestureRecognizer *)sender {
+    
+    CGPoint pt = [sender translationInView:_visualEffectView];
+    
+    _visualEffectViewHeight.constant = visualEffectViewInitHeight - pt.y;
+    
+    CGFloat scale = (_visualEffectViewHeight.constant - visualEffectViewMinHeight) / (SCREEN_HEIGHT * 2 / 3  - visualEffectViewMinHeight);
+    _localViewCenterY.constant = scale * - SCREEN_HEIGHT / 3;
+    _punchView.alpha = 1 - scale;
+    
+    if (_visualEffectViewHeight.constant < visualEffectViewMinHeight) {
+        
+        _visualEffectViewHeight.constant = visualEffectViewMinHeight;
+        _localViewCenterY.constant = 0;
+        
+    }
+
+    if (_visualEffectViewHeight.constant > SCREEN_HEIGHT * 2 / 3) {
+        
+        _visualEffectViewHeight.constant = SCREEN_HEIGHT * 2 / 3;
+        _localViewCenterY.constant = - SCREEN_HEIGHT / 3;
+        
+    }
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        
+        visualEffectViewInitHeight = _visualEffectViewHeight.constant;
+        localViewInitCenterY = _localViewCenterY.constant;
+        
+    }
+    
+}
+
+- (IBAction)punchButtonClick:(id)sender {
+    
+    [self moveUserLocationToMapViewCenter];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSString *nowDateStr = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSLog(@"时间：%@", nowDateStr);
+    NSLog(@"坐标：%@", _userLocation);
+    
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    
+    NSLog(@"位置坐标：%f，%f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    
+    _userLocation = userLocation;
+    
+    [self moveUserLocationToMapViewCenter];
+    
+}
+/*
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+    
+//    [_punchButton setImage:[UIImage imageNamed:@"local"] forState:UIControlStateNormal];
+//    [_punchButton setTitle:@"" forState:UIControlStateNormal];
+    
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+
+    NSLog(@"中心坐标：%f，%f", mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude);
+    
+//    if (fabs(mapView.centerCoordinate.latitude - _userLocation.location.coordinate.latitude) < 0.00005&&
+//        fabs(mapView.centerCoordinate.longitude - _userLocation.location.coordinate.longitude) < 0.00005) {
+//        
+//        [_punchButton setImage:nil forState:UIControlStateNormal];
+//        [_punchButton setTitle:@"签到" forState:UIControlStateNormal];
+//        
+//    }else {
+//        
+//        [_punchButton setImage:[UIImage imageNamed:@"local"] forState:UIControlStateNormal];
+//        [_punchButton setTitle:@"" forState:UIControlStateNormal];
+//        
+//    }
+    
+}*/
+
+- (void)moveUserLocationToMapViewCenter {
+    
+    MKCoordinateRegion region = MKCoordinateRegionMake(_userLocation.location.coordinate, MKCoordinateSpanMake(0.003, 0.003));
+    
+    [self.mapView setRegion:region animated:YES];
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return 0;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    
+    cell.backgroundColor = [UIColor clearColor];
+    
+    return cell;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
