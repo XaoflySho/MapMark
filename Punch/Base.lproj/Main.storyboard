@@ -196,31 +196,55 @@
                                             <constraint firstAttribute="height" constant="0.33000000000000002" id="f8s-fp-LEW"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pDc-1o-uy7">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="57" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pDc-1o-uy7">
                                         <rect key="frame" x="0.0" y="69" width="375" height="375.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="90" id="Cix-VK-heR" customClass="ListTableViewCell">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="57" id="Cix-VK-heR" customClass="ListTableViewCell">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cix-VK-heR" id="9I4-MC-vpG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="89.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="56.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hZ-aj-PGo">
-                                                            <rect key="frame" x="8" y="34" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hZ-aj-PGo">
+                                                            <rect key="frame" x="8" y="8" width="64" height="25.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="64" id="b4v-95-K2g"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qT7-8P-yml">
+                                                            <rect key="frame" x="80" y="34" width="254" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="二七纪念塔" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AcO-Uh-CsP">
+                                                            <rect key="frame" x="80" y="8" width="254" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="1hZ-aj-PGo" firstAttribute="centerY" secondItem="9I4-MC-vpG" secondAttribute="centerY" id="oAb-VT-pHt"/>
+                                                        <constraint firstItem="qT7-8P-yml" firstAttribute="leading" secondItem="AcO-Uh-CsP" secondAttribute="leading" id="5PJ-Op-Zc7"/>
+                                                        <constraint firstItem="qT7-8P-yml" firstAttribute="top" secondItem="AcO-Uh-CsP" secondAttribute="bottom" constant="8" id="MQB-2i-YST"/>
+                                                        <constraint firstItem="AcO-Uh-CsP" firstAttribute="top" secondItem="9I4-MC-vpG" secondAttribute="top" constant="8" id="OLT-Ua-ubH"/>
+                                                        <constraint firstItem="qT7-8P-yml" firstAttribute="trailing" secondItem="AcO-Uh-CsP" secondAttribute="trailing" id="Vvv-o7-VdX"/>
+                                                        <constraint firstItem="AcO-Uh-CsP" firstAttribute="leading" secondItem="1hZ-aj-PGo" secondAttribute="trailing" constant="8" id="gZN-Pe-hUZ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="AcO-Uh-CsP" secondAttribute="trailing" constant="8" id="mcp-Xg-Dsf"/>
+                                                        <constraint firstItem="1hZ-aj-PGo" firstAttribute="top" secondItem="9I4-MC-vpG" secondAttribute="top" constant="8" id="rrg-gh-cZu"/>
                                                         <constraint firstItem="1hZ-aj-PGo" firstAttribute="leading" secondItem="9I4-MC-vpG" secondAttribute="leading" constant="8" id="sGw-QY-MAc"/>
+                                                        <constraint firstAttribute="bottom" secondItem="qT7-8P-yml" secondAttribute="bottom" constant="8" id="usa-Jk-Ixk"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
-                                                <inset key="separatorInset" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <connections>
+                                                    <outlet property="formattedAddressLineLabel" destination="qT7-8P-yml" id="aBg-0c-Lfa"/>
+                                                    <outlet property="nameLabel" destination="AcO-Uh-CsP" id="1wq-9p-sop"/>
                                                     <outlet property="timeLabel" destination="1hZ-aj-PGo" id="khd-pl-fhV"/>
                                                 </connections>
                                             </tableViewCell>

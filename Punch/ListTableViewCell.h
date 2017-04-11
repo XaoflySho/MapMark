@@ -12,4 +12,8 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
 
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+
+@property (nonatomic, weak) IBOutlet UILabel *formattedAddressLineLabel;
+
 @end

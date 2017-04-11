@@ -8,6 +8,9 @@
 
 #import "LocalViewController.h"
 #import "ListTableViewCell.h"
+#import "CoreDateManage.h"
+#import "MarkMO+CoreDataClass.h"
+#import "MarkAnnotation.h"
 
 //屏幕宽度
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
@@ -36,8 +39,11 @@
 @property (nonatomic, strong) NSTimer *timer;
 
 @property (nonatomic, strong) MKUserLocation *userLocation;
+@property (nonatomic, strong) NSDictionary *addressDictionary;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
+
+@property (nonatomic, strong) NSArray *marks;
 
 @end
 
@@ -58,6 +64,8 @@ static int localViewInitCenterY = 0;
     [_visualEffectView setEffect:blurEffect];
     
     [self timerInit];
+    
+    [self markFromDatabase];
     
     if ([CLLocationManager locationServicesEnabled]) {
 
@@ -183,16 +191,75 @@ static int localViewInitCenterY = 0;
 
 - (IBAction)punchButtonClick:(id)sender {
     
-    [self moveUserLocationToMapViewCenter];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSString *nowDateStr = [dateFormatter stringFromDate:[NSDate date]];
-    
-    NSLog(@"时间：%@", nowDateStr);
-    NSLog(@"坐标：%@", _userLocation);
+    [self moveLocationToMapViewCenter:_userLocation.location];
+
+    [self saveToDatabase];
     
 }
+
+#pragma mark - DatabaseController
+
+- (void)saveToDatabase {
+    
+    MarkMO *mark = [NSEntityDescription insertNewObjectForEntityForName:@"Mark" inManagedObjectContext:[[CoreDateManage sharedManager] managedObjectContext]];
+    
+    mark.date = [NSDate date];
+    mark.location_latitude = _userLocation.location.coordinate.latitude;
+    mark.location_longitude = _userLocation.location.coordinate.longitude;
+    
+    mark.address_city = _addressDictionary[@"City"];
+    mark.address_country = _addressDictionary[@"Country"];
+    mark.address_country_code = _addressDictionary[@"CountryCode"];
+    mark.address_name = _addressDictionary[@"Name"];
+    mark.address_state = _addressDictionary[@"State"];
+    mark.address_street = _addressDictionary[@"Street"];
+    mark.address_sub_locality = _addressDictionary[@"SubLocality"];
+    mark.address_sub_thoroughfare = _addressDictionary[@"SubThoroughfare"];
+    mark.address_thoroughfare = _addressDictionary[@"Thoroughfare"];
+    
+    mark.formatted_address_lines = _addressDictionary[@"FormattedAddressLines"][0];
+    
+    NSError * error = nil ;
+    if (![[[CoreDateManage sharedManager] managedObjectContext] save:&error]) {
+        NSAssert (NO, @"Error saving context: %@ \n %@", [error localizedDescription], [error userInfo]);
+    }
+    
+    NSLog(@"%@", NSHomeDirectory());
+    
+    [self markFromDatabase];
+    
+}
+
+- (void)markFromDatabase {
+    
+    NSManagedObjectContext *moc = [[CoreDateManage sharedManager] managedObjectContext];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Mark"];
+    
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [calendar components:NSCalendarUnitEra |NSCalendarUnitYear | NSCalendarUnitMonth| NSCalendarUnitDay | NSCalendarUnitHour  fromDate: date];
+    NSDate *beginDate = [calendar dateFromComponents:comps];
+    NSDate *endDate = [beginDate dateByAddingTimeInterval:3600*24];
+    
+    request.predicate = [NSPredicate predicateWithFormat:@"date >= %@ AND date < %@", beginDate, endDate];
+    
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+    request.sortDescriptors = [NSArray arrayWithObject:sort];
+    
+    NSError * error = nil ;
+    NSArray * results = [moc executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog (@"Error fetching Employee objects: %@ \n %@", [error localizedDescription], [error userInfo]);
+        abort ();
+    }
+    
+    _marks = results;
+    
+    [_listTableView reloadData];
+    
+}
+
+#pragma mark - MapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     
@@ -200,7 +267,7 @@ static int localViewInitCenterY = 0;
     
     _userLocation = userLocation;
     
-    [self moveUserLocationToMapViewCenter];
+    [self moveLocationToMapViewCenter:userLocation.location];
     
     [self reverseGeocodeLocation:userLocation.location];
     
@@ -232,9 +299,17 @@ static int localViewInitCenterY = 0;
     
 }*/
 
-- (void)moveUserLocationToMapViewCenter {
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+//
+//    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"Annotation"];
+//
+//
+//    return annotationView;
+//}
+
+- (void)moveLocationToMapViewCenter:(CLLocation *)location {
     
-    MKCoordinateRegion region = MKCoordinateRegionMake(_userLocation.location.coordinate, MKCoordinateSpanMake(0.003, 0.003));
+    MKCoordinateRegion region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.003, 0.003));
     
     [self.mapView setRegion:region animated:YES];
     
@@ -251,44 +326,25 @@ static int localViewInitCenterY = 0;
                            
                            NSLog(@"地理位置反编码失败：%@",error);
                            
-                           //                           self.areaString = @"未知";
-                           //                           self.cityString = @"未知";
-                           //                           self.provinceString = @"未知";
-                           
                            NSLog(@"未获取到设备位置！");
-                           
-                           //                           self.areaLabel.text = @"定位失败,请选择";
-//                           self.provinceString = @"定位失败";
-                           
                            
                        }else{
                            
                            CLPlacemark *placemark = [placemarks lastObject];
                            
-                           NSDictionary *addressDictionary = placemark.addressDictionary;
-                           
-                           NSLog(@"0：%@",placemark.addressDictionary);
-                           NSLog(@"1：%@",placemark.administrativeArea);
-                           NSLog(@"2：%@",placemark.locality);
-                           NSLog(@"3：%@",placemark.name);
-                           NSLog(@"4：%@",placemark.thoroughfare);
-                           NSLog(@"5：%@",placemark.subThoroughfare);
-                           NSLog(@"6：%@",placemark.subLocality);
-                           NSLog(@"7：%@",placemark.areasOfInterest);
-//                           self.provinceString = placemark.administrativeArea;
-//                           self.cityString = placemark.locality;
-//                           self.areaString = placemark.name;
-                           
-                           //                           self.areaLabel.text = placemark.name;
+                           _addressDictionary = placemark.addressDictionary;
+
                        }
                        
                    }];
     
 }
 
+#pragma mark - TableViewDelegate
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 30;
+    return _marks.count;
     
 }
 
@@ -296,11 +352,33 @@ static int localViewInitCenterY = 0;
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.timeLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    MarkMO *mark = _marks[indexPath.row];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"HH:mm";
+    NSString *dateStr = [dateFormatter stringFromDate:mark.date];
+    
+    cell.timeLabel.text = dateStr;
+    cell.nameLabel.text = mark.address_name;
+    cell.formattedAddressLineLabel.text = mark.formatted_address_lines;
     
     cell.backgroundColor = [UIColor clearColor];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MarkMO *mark = _marks[indexPath.row];
+    
+    [_mapView removeAnnotations:[_mapView annotations]];
+    
+    MarkAnnotation *markAnnotation = [[MarkAnnotation alloc]init];
+    markAnnotation.coordinate = CLLocationCoordinate2DMake(mark.location_latitude, mark.location_longitude);
+    markAnnotation.title = mark.address_name;
+    
+    [_mapView addAnnotation:markAnnotation];
+    
 }
 
 - (void)didReceiveMemoryWarning {
