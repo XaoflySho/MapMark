@@ -75,16 +75,15 @@ static int localViewInitCenterY = 0;
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     
-    //定位授权
     [self.locationManager requestWhenInUseAuthorization];
     
     self.geocoder = [[CLGeocoder alloc] init];
     
     self.selectedDate = [NSDate date];
     
-    [self setDateButtonTitleWithDate:_selectedDate];
+    [self setDateButtonTitleWithDate:_selectedDate reloadAnimation:UITableViewRowAnimationAutomatic];
     
-    [self markFromDatabaseWithDate:_selectedDate reloadMarkNumber:YES];
+//    [self markFromDatabaseWithDate:_selectedDate reloadAnimation:UITableViewRowAnimationAutomatic];
     
 }
 
@@ -130,17 +129,21 @@ static int localViewInitCenterY = 0;
     
 }
 
-- (void)setDateButtonTitleWithDate:(NSDate *)date {
+- (void)setDateButtonTitleWithDate:(NSDate *)date reloadAnimation:(UITableViewRowAnimation)animation {
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    dateFormatter.dateFormat = @"yyyy-MM-dd";
-    NSString *dateStr = [dateFormatter stringFromDate:date];
-    NSString *nowDateStr = [dateFormatter stringFromDate:[NSDate date]];
+    NSString *dateStr;
     
-    if ([dateStr isEqualToString:nowDateStr]) {
+    if ([self isSameDate:date andDate:[NSDate date]]) {
+        
         dateStr = @"Today";
+        
         [_nextButton setEnabled:NO];
     }else {
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateFormat = @"yyyy-MM-dd";
+        dateStr = [dateFormatter stringFromDate:date];
+        
         [_nextButton setEnabled:YES];
     }
 
@@ -148,7 +151,7 @@ static int localViewInitCenterY = 0;
     
     _selectedDate = date;
     
-    [self markFromDatabaseWithDate:date reloadMarkNumber:NO];
+    [self markFromDatabaseWithDate:date reloadAnimation:animation];
     
 }
 
@@ -246,7 +249,7 @@ static int localViewInitCenterY = 0;
     
     NSDate *previousDay = [NSDate dateWithTimeInterval:-(24*60*60) sinceDate:_selectedDate];
     
-    [self setDateButtonTitleWithDate:previousDay];
+    [self setDateButtonTitleWithDate:previousDay reloadAnimation:UITableViewRowAnimationRight];
     
 }
 
@@ -254,7 +257,7 @@ static int localViewInitCenterY = 0;
     
     NSDate *nextDay = [NSDate dateWithTimeInterval:24*60*60 sinceDate:_selectedDate];
     
-    [self setDateButtonTitleWithDate:nextDay];
+    [self setDateButtonTitleWithDate:nextDay reloadAnimation:UITableViewRowAnimationLeft];
     
 }
 
@@ -262,7 +265,14 @@ static int localViewInitCenterY = 0;
     
     NSDate *today = [NSDate date];
     
-    [self setDateButtonTitleWithDate:today];
+    [self setDateButtonTitleWithDate:today reloadAnimation:UITableViewRowAnimationLeft];
+    
+}
+
+- (IBAction)dateButtonLongPress:(id)sender {
+    
+
+    NSLog(@"!");
     
 }
 
@@ -390,7 +400,7 @@ static int localViewInitCenterY = 0;
     
     if (result) {
         
-        [self markFromDatabaseWithDate:_selectedDate reloadMarkNumber:YES];
+        [self markFromDatabaseWithDate:[NSDate date] reloadAnimation:UITableViewRowAnimationAutomatic];
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mark"
                                                                        message:@""
@@ -412,18 +422,23 @@ static int localViewInitCenterY = 0;
     }
 }
 
-- (void)markFromDatabaseWithDate:(NSDate *)date reloadMarkNumber:(BOOL)reload {
+- (void)markFromDatabaseWithDate:(NSDate *)date reloadAnimation:(UITableViewRowAnimation)animation {
     
     NSArray *results = [DataController dataFromDatabaseWithDate:date];
     
-    _marks = results;
-    
-    [self.listTableView reloadData];
-    
-    if (reload) {
-        _markNumberLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)results.count];
+    if ([self isSameDate:date andDate:_selectedDate]) {
+        
+        _marks = results;
+        
+        [self.listTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:animation];
+        
     }
     
+    if ([self isSameDate:date andDate:[NSDate date]]) {
+        
+        _markNumberLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)results.count];
+        
+    }
 }
 
 #pragma mark - TableViewDelegate
@@ -477,6 +492,19 @@ static int localViewInitCenterY = 0;
     CLLocation *location = [[CLLocation alloc]initWithLatitude:mark.location_latitude longitude:mark.location_longitude];
     [self moveLocationToMapViewCenter:location];
     
+}
+
+- (BOOL)isSameDate:(NSDate*)date1 andDate:(NSDate*)date2 {
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *date1Components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date1];
+    NSDateComponents *date2Components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date2];
+    
+    BOOL isSameDay = [date1Components day] == [date2Components day];
+    BOOL isSameMonth = [date1Components month] == [date2Components month];
+    BOOL isSameYear = [date1Components year] == [date2Components year];
+    
+    return isSameDay && isSameMonth && isSameYear;
 }
 
 - (void)didReceiveMemoryWarning {
