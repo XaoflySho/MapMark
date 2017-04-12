@@ -83,8 +83,6 @@ static int localViewInitCenterY = 0;
     
     [self setDateButtonTitleWithDate:_selectedDate reloadAnimation:UITableViewRowAnimationAutomatic];
     
-//    [self markFromDatabaseWithDate:_selectedDate reloadAnimation:UITableViewRowAnimationAutomatic];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,7 +149,7 @@ static int localViewInitCenterY = 0;
     
     _selectedDate = date;
     
-    [self markFromDatabaseWithDate:date reloadAnimation:animation];
+    [self markFromDatabaseWithDate:date];
     
 }
 
@@ -400,9 +398,9 @@ static int localViewInitCenterY = 0;
     
     if (result) {
         
-        [self markFromDatabaseWithDate:[NSDate date] reloadAnimation:UITableViewRowAnimationAutomatic];
+        [self markFromDatabaseWithDate:[NSDate date]];
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mark"
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Succeed"
                                                                        message:@""
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK"
@@ -422,7 +420,7 @@ static int localViewInitCenterY = 0;
     }
 }
 
-- (void)markFromDatabaseWithDate:(NSDate *)date reloadAnimation:(UITableViewRowAnimation)animation {
+- (void)markFromDatabaseWithDate:(NSDate *)date {
     
     NSArray *results = [DataController dataFromDatabaseWithDate:date];
     
@@ -430,7 +428,7 @@ static int localViewInitCenterY = 0;
         
         _marks = results;
         
-        [self.listTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:animation];
+        [self.listTableView reloadData];
         
     }
     
