@@ -314,7 +314,7 @@
                                                     <action selector="nextButtonClick:" destination="XVt-iz-pln" eventType="touchUpInside" id="9fF-iN-IKF"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KST-nl-3zn">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KST-nl-3zn">
                                                 <rect key="frame" x="323" y="0.0" width="36" height="36"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -336,7 +336,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="TE0-b3-LxW" kind="push" id="ZIK-c8-OGa"/>
+                                                    <segue destination="TE0-b3-LxW" kind="show" id="ZIK-c8-OGa"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -372,15 +372,15 @@
                                         <rect key="frame" x="0.0" y="69" width="375" height="375.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="Cell" id="Cix-VK-heR" customClass="ListTableViewCell">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="Cix-VK-heR" customClass="ListTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="88"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cix-VK-heR" id="9I4-MC-vpG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="328" height="87.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CN" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0S-ZV-TUS">
-                                                            <rect key="frame" x="225" y="0.0" width="103" height="86"/>
+                                                            <rect key="frame" x="272" y="0.0" width="103" height="86"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="72"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -401,7 +401,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中国河南郑州市" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6a-XH-SCV">
-                                                            <rect key="frame" x="80" y="47.5" width="240" height="24"/>
+                                                            <rect key="frame" x="80" y="47.5" width="287" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -427,7 +427,7 @@
                                                     <outlet property="formattedAddressLineLabel" destination="E6a-XH-SCV" id="MfI-FI-AzG"/>
                                                     <outlet property="nameLabel" destination="fAC-cb-Bag" id="dJT-sH-R6k"/>
                                                     <outlet property="timeLabel" destination="lIl-Ql-da5" id="Oya-q2-YRY"/>
-                                                    <segue destination="1Mk-Vi-e3S" kind="push" trigger="accessoryAction" id="c1I-Vd-1Rm"/>
+                                                    <segue destination="1Mk-Vi-e3S" kind="show" trigger="accessoryAction" id="c1I-Vd-1Rm"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -556,7 +556,7 @@
                     <navigationItem key="navigationItem" id="Nvf-tE-43H">
                         <barButtonItem key="rightBarButtonItem" image="Setting" id="CZK-mn-qiQ">
                             <connections>
-                                <segue destination="3jV-Fs-N2f" kind="push" id="0uO-tM-96o"/>
+                                <segue destination="3jV-Fs-N2f" kind="show" id="0uO-tM-96o"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
