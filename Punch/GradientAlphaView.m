@@ -40,7 +40,7 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
-    _gradientLayer.colors = @[(id)_startColor.CGColor, (id)_endColor.CGColor];
+    _gradientLayer.colors = @[(__bridge id)_startColor.CGColor, (__bridge id)_endColor.CGColor];
     _gradientLayer.startPoint = _startPoint;
     _gradientLayer.endPoint = _endPoint;
     _gradientLayer.frame = rect;

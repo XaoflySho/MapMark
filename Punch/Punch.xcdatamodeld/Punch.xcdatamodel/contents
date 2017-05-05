@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Mark" representedClassName="MarkMO" syncable="YES">
+        <attribute name="address_city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_country_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_sub_locality" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_sub_thoroughfare" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address_thoroughfare" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="formatted_address_lines" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location_latitude" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="location_longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Mark" positionX="-225" positionY="9" width="162" height="238"/>
+    </elements>
 </model>
