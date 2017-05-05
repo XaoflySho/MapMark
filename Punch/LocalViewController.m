@@ -241,6 +241,8 @@ static int localViewInitCenterY = 0;
     
     [self moveLocationToMapViewCenter:_userLocation.location];
     
+    [_locationButton setImage:[UIImage imageNamed:@"Location"] forState:UIControlStateNormal];
+    
 }
 
 - (IBAction)previousButtonClick:(id)sender {
@@ -337,8 +339,6 @@ static int localViewInitCenterY = 0;
     
     [self.mapView setRegion:region animated:YES];
     
-    [_locationButton setImage:[UIImage imageNamed:@"Location"] forState:UIControlStateNormal];
-    
 }
 
 - (void)reverseGeocodeLocation:(nonnull CLLocation *)location {
@@ -392,9 +392,9 @@ static int localViewInitCenterY = 0;
     NSLog(@"%@", _placemark.addressDictionary);
     
     BOOL result = [DataController markToDatabaseWithDate:[NSDate date]
-                          locationLatitude:_userLocation.location.coordinate.latitude
-                         locationLongitude:_userLocation.location.coordinate.longitude
-                                   address:_placemark.addressDictionary];
+                                        locationLatitude:_userLocation.location.coordinate.latitude
+                                       locationLongitude:_userLocation.location.coordinate.longitude
+                                                 address:_placemark.addressDictionary];
     
     if (result) {
         
@@ -476,6 +476,8 @@ static int localViewInitCenterY = 0;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     MarkMO *mark = _marks[indexPath.row];
     
     [_mapView removeAnnotations:[_mapView annotations]];
@@ -490,6 +492,8 @@ static int localViewInitCenterY = 0;
     CLLocation *location = [[CLLocation alloc]initWithLatitude:mark.location_latitude longitude:mark.location_longitude];
     [self moveLocationToMapViewCenter:location];
     
+    [_locationButton setImage:[UIImage imageNamed:@"Location_0"] forState:UIControlStateNormal];
+
 }
 
 - (BOOL)isSameDate:(NSDate*)date1 andDate:(NSDate*)date2 {
